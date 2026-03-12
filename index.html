@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GestureHome - Smart Home Automation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Particle Background -->
+    <div id="particles"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-brand">
+            <i class="fas fa-hand-sparkles"></i>
+            <span>GestureHome</span>
+        </div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#home" class="active" data-page="home"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="#about" data-page="about"><i class="fas fa-info-circle"></i> About</a></li>
+            <li id="dashboardLink" style="display: none;"><a href="#dashboard" data-page="dashboard"><i class="fas fa-desktop"></i> Dashboard</a></li>
+            <li id="logoutLink" style="display: none;"><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            <li id="loginNavLink"><a href="#login" data-page="login"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+        </ul>
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- Pages Container -->
+    <main id="pagesContainer">
+        
+        <!-- Home Page (Landing) -->
+        <section id="homePage" class="page active">
+            <div class="hero-section">
+                <div class="hero-content">
+                    <h1 class="hero-title fade-in">Welcome to <span class="gradient-text">GestureHome</span></h1>
+                    <p class="hero-subtitle slide-up">Control your smart home with the wave of your hand</p>
+                    <div class="hero-buttons">
+                        <button class="btn btn-primary" onclick="navigateTo('login')">
+                            <i class="fas fa-sign-in-alt"></i> Get Started
+                        </button>
+                        <button class="btn btn-secondary" onclick="navigateTo('about')">
+                            <i class="fas fa-info-circle"></i> Learn More
+                        </button>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="gesture-preview">
+                        <div class="hand-icon">
+                            <i class="fas fa-hand-paper"></i>
+                        </div>
+                        <div class="gesture-ring"></div>
+                        <div class="gesture-ring delay-1"></div>
+                        <div class="gesture-ring delay-2"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Features Preview -->
+            <div class="features-preview">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-hand-pointer"></i>
+                    </div>
+                    <h3>Hand Gestures</h3>
+                    <p>Control devices with natural hand movements</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-microphone-alt"></i>
+                    </div>
+                    <h3>Voice Control</h3>
+                    <p>Works with voice commands too</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Secure</h3>
+                    <p>Advanced encryption for your safety</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Mobile Ready</h3>
+                    <p>Access from anywhere</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Login Page -->
+        <section id="loginPage" class="page">
+            <div class="login-container">
+                <div class="login-card">
+                    <div class="login-header">
+                        <div class="login-icon">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <h2>Welcome Back</h2>
+                        <p>Sign in to control your smart home</p>
+                    </div>
+                    <form id="loginForm" class="login-form">
+                        <div class="input-group">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="email" placeholder="Email Address" required>
+                        </div>
+                        <div class="input-group">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="password" placeholder="Password" required>
+                            <i class="fas fa-eye toggle-password" id="togglePassword"></i>
+                        </div>
+                        <div class="form-options">
+                            <label class="checkbox-container">
+                                <input type="checkbox" id="rememberMe">
+                                <span class="checkmark"></span>
+                                Remember me
+                            </label>
+                            <a href="#" class="forgot-link">Forgot Password?</a>
+                        </div>
+                        <button type="submit" class="btn btn-login">
+                            <span>Sign In</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                        <div class="login-error" id="loginError">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <span>Invalid email or password</span>
+                        </div>
+                    </form>
+                    <div class="login-footer">
+                        <p>Demo Credentials: <strong>admin@guest.com</strong> / <strong>admin123</strong></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Page -->
+        <section id="aboutPage" class="page">
+            <div class="about-container">
+                <div class="about-header">
+                    <h1>About <span class="gradient-text">GestureHome</span></h1>
+                    <p>Revolutionizing home automation with intuitive hand gesture control</p>
+                </div>
+
+                <div class="about-section">
+                    <div class="about-card">
+                        <div class="about-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h3>Our Vision</h3>
+                        <p>We believe technology should be intuitive and natural. GestureHome allows you to control your entire smart home with simple hand movements, making automation feel like magic.</p>
+                    </div>
+                    <div class="about-card">
+                        <div class="about-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h3>Innovation</h3>
+                        <p>Powered by advanced computer vision and machine learning, our system accurately detects and interprets hand gestures in real-time, providing seamless control over your home devices.</p>
+                    </div>
+                </div>
+
+                <div class="features-section">
+                    <h2>Key Features</h2>
+                    <div class="features-grid">
+                        <div class="feature-item">
+                            <i class="fas fa-hand-paper"></i>
+                            <div>
+                                <h4>Hand Gesture Control</h4>
+                                <p>Use thumbs up, down, open palm, and more to control devices</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-video"></i>
+                            <div>
+                                <h4>Real-time Detection</h4>
+                                <p>Instant response to gestures with visual feedback</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-lightbulb"></i>
+                            <div>
+                                <h4>Smart Lighting</h4>
+                                <p>Control lights in every room with gesture commands</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-temperature-low"></i>
+                            <div>
+                                <h4>Climate Control</h4>
+                                <p>Adjust fan speed and AC temperature effortlessly</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-door-closed"></i>
+                            <div>
+                                <h4>Smart Lock</h4>
+                                <p>Lock and unlock your door with simple gestures</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-chart-line"></i>
+                            <div>
+                                <h4>Activity Log</h4>
+                                <p>Track all your commands and device activities</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="gestures-guide">
+                    <h2>Gesture Controls</h2>
+                    <div class="gestures-grid">
+                        <div class="gesture-item">
+                            <div class="gesture-icon thumbs-up">
+                                <i class="fas fa-thumbs-up"></i>
+                            </div>
+                            <h4>👍 Thumbs Up</h4>
+                            <p>Turn ON device</p>
+                        </div>
+                        <div class="gesture-item">
+                            <div class="gesture-icon thumbs-down">
+                                <i class="fas fa-thumbs-down"></i>
+                            </div>
+                            <h4>👎 Thumbs Down</h4>
+                            <p>Turn OFF device</p>
+                        </div>
+                        <div class="gesture-item">
+                            <div class="gesture-icon open-palm">
+                                <i class="fas fa-hand-paper"></i>
+                            </div>
+                            <h4>✋ Open Palm</h4>
+                            <p>Toggle device</p>
+                        </div>
+                        <div class="gesture-item">
+                            <div class="gesture-icon peace">
+                                <i class="fas fa-hand-peace"></i>
+                            </div>
+                            <h4>✌️ Peace Sign</h4>
+                            <p>Cycle modes</p>
+                        </div>
+                        <div class="gesture-item">
+                            <div class="gesture-icon ok-sign">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <h4>👌 OK Sign</h4>
+                            <p>Lock/Unlock door</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tech-stack">
+                    <h2>Technology Stack</h2>
+                    <div class="tech-items">
+                        <div class="tech-item">
+                            <i class="fab fa-html5"></i>
+                            <span>HTML5</span>
+                        </div>
+                        <div class="tech-item">
+                            <i class="fab fa-css3-alt"></i>
+                            <span>CSS3</span>
+                        </div>
+                        <div class="tech-item">
+                            <i class="fab fa-js"></i>
+                            <span>JavaScript</span>
+                        </div>
+                        <div class="tech-item">
+                            <i class="fas fa-brain"></i>
+                            <span>MediaPipe</span>
+                        </div>
+                        <div class="tech-item">
+                            <i class="fas fa-eye"></i>
+                            <span>Computer Vision</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dashboard Page -->
+        <section id="dashboardPage" class="page">
+            <div class="dashboard-container">
+                <div class="dashboard-header">
+                    <h1><i class="fas fa-house-user"></i> Control Panel</h1>
+                    <div class="user-info">
+                        <span id="userEmail">user@example.com</span>
+                        <button class="btn-logout" id="dashboardLogout">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </div>
+                </div>
+
+                <div class="dashboard-content">
+                    <!-- Camera Section -->
+                    <div class="camera-section">
+                        <div class="camera-header">
+                            <h3><i class="fas fa-video"></i> Gesture Camera</h3>
+                            <div class="camera-status">
+                                <span class="status-dot" id="cameraStatus"></span>
+                                <span id="cameraStatusText">Initializing...</span>
+                            </div>
+                        </div>
+                        <div class="camera-container">
+                            <video id="video" autoplay playsinline></video>
+                            <canvas id="canvas"></canvas>
+                        </div>
+                        <div class="gesture-display">
+                            <div class="current-gesture">
+                                <i class="fas fa-hand-paper" id="gestureIcon"></i>
+                                <span id="gestureName">No gesture detected</span>
+                            </div>
+                            <div class="gesture-confidence">
+                                <div class="confidence-bar">
+                                    <div class="confidence-fill" id="confidenceFill"></div>
+                                </div>
+                                <span id="confidenceValue">0%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Device Controls -->
+                    <div class="devices-section">
+                        <h3><i class="fas fa-sliders-h"></i> Device Controls</h3>
+                        
+                        <!-- Lights -->
+                        <div class="device-card" id="lightCard">
+                            <div class="device-header">
+                                <div class="device-icon lights">
+                                    <i class="fas fa-lightbulb"></i>
+                                </div>
+                                <div class="device-info">
+                                    <h4>Smart Lights</h4>
+                                    <span class="device-status" id="lightStatus">OFF</span>
+                                </div>
+                            </div>
+                            <div class="device-controls">
+                                <div class="room-selector">
+                                    <button class="room-btn active" data-room="living">Living Room</button>
+                                    <button class="room-btn" data-room="bedroom">Bedroom</button>
+                                    <button class="room-btn" data-room="kitchen">Kitchen</button>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" id="lightToggle">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="brightness-control">
+                                <i class="fas fa-sun"></i>
+                                <input type="range" min="0" max="100" value="75" id="brightnessSlider">
+                                <span id="brightnessValue">75%</span>
+                            </div>
+                        </div>
+
+                        <!-- Fan -->
+                        <div class="device-card" id="fanCard">
+                            <div class="device-header">
+                                <div class="device-icon fan">
+                                    <i class="fas fa-fan"></i>
+                                </div>
+                                <div class="device-info">
+                                    <h4>Ceiling Fan</h4>
+                                    <span class="device-status" id="fanStatus">OFF</span>
+                                </div>
+                            </div>
+                            <div class="device-controls">
+                                <div class="speed-control">
+                                    <button class="speed-btn" data-speed="0"><i class="fas fa-power-off"></i></button>
+                                    <button class="speed-btn" data-speed="1"><i class="fas fa-tachometer-alt"></i> 1</button>
+                                    <button class="speed-btn" data-speed="2"><i class="fas fa-tachometer-alt"></i> 2</button>
+                                    <button class="speed-btn active" data-speed="3"><i class="fas fa-tachometer-alt"></i> 3</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Air Conditioner -->
+                        <div class="device-card" id="acCard">
+                            <div class="device-header">
+                                <div class="device-icon ac">
+                                    <i class="fas fa-snowflake"></i>
+                                </div>
+                                <div class="device-info">
+                                    <h4>Air Conditioner</h4>
+                                    <span class="device-status" id="acStatus">OFF</span>
+                                </div>
+                            </div>
+                            <div class="device-controls">
+                                <label class="switch">
+                                    <input type="checkbox" id="acToggle">
+                                    <span class="slider"></span>
+                                </label>
+                                <div class="temp-control">
+                                    <button id="tempDown"><i class="fas fa-minus"></i></button>
+                                    <span id="tempValue">24°C</span>
+                                    <button id="tempUp"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Door Lock -->
+                        <div class="device-card" id="doorCard">
+                            <div class="device-header">
+                                <div class="device-icon door locked">
+                                    <i class="fas fa-lock"></i>
+                                </div>
+                                <div class="device-info">
+                                    <h4>Smart Door</h4>
+                                    <span class="device-status locked" id="doorStatus">LOCKED</span>
+                                </div>
+                            </div>
+                            <div class="device-controls">
+                                <button class="btn-lock" id="doorToggle">
+                                    <i class="fas fa-lock-open"></i> Unlock
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Activity Log -->
+                    <div class="activity-section">
+                        <h3><i class="fas fa-history"></i> Activity Log</h3>
+                        <div class="activity-list" id="activityList">
+                            <div class="activity-item">
+                                <i class="fas fa-info-circle"></i>
+                                <span>System initialized</span>
+                                <span class="activity-time">Just now</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loader">
+            <div class="hand-loader">
+                <i class="fas fa-hand-paper"></i>
+            </div>
+            <p>Loading GestureHome...</p>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1646424915/hands.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils@0.3.1640029074/camera_utils.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils@0.3.1640029080/drawing_utils.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/devices.js"></script>
+    <script src="js/gesture.js"></script>
+</body>
+</html>
+
