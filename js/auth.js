@@ -13,6 +13,15 @@ const rememberMeCheckbox = document.getElementById("rememberMe");
 const togglePasswordBtn = document.getElementById("togglePassword");
 const loginError = document.getElementById("loginError");
 
+const signupForm = document.getElementById("signupForm");
+const signupNameInput = document.getElementById("signupName");
+const signupEmailInput = document.getElementById("signupEmail");
+const signupPasswordInput = document.getElementById("signupPassword");
+const signupConfirmPasswordInput = document.getElementById("signupConfirmPassword");
+const signupError = document.getElementById("signupError");
+const signupLink = document.getElementById("signupLink");
+const loginLink = document.getElementById("loginLink");
+
 // State
 let authToken = null;
 let socket = null;
@@ -23,8 +32,30 @@ function initAuth() {
     loginForm.addEventListener("submit", handleLogin);
   }
 
+  if (signupForm) {
+    signupForm.addEventListener("submit", handleSignup);
+  }
+
   if (togglePasswordBtn) {
     togglePasswordBtn.addEventListener("click", togglePasswordVisibility);
+  }
+
+  if (signupLink) {
+    signupLink.addEventListener("click", (e) => {
+      e.preventDefault();
+      if (typeof navigateTo === "function") {
+        navigateTo("signup");
+      }
+    });
+  }
+
+  if (loginLink) {
+    loginLink.addEventListener("click", (e) => {
+      e.preventDefault();
+      if (typeof navigateTo === "function") {
+        navigateTo("login");
+      }
+    });
   }
 
   loadSavedCredentials();
@@ -151,6 +182,45 @@ async function handleLogin(e) {
   }
 }
 
+async function handleSignup(e) {
+  e.preventDefault();
+
+  const name = signupNameInput.value.trim();
+  const email = signupEmailInput.value.trim();
+  const password = signupPasswordInput.value;
+  const confirmPassword = signupConfirmPasswordInput.value;
+
+  if (!name) {
+    showSignupError("Please enter your full name");
+    return;
+  }
+
+  if (!validateEmail(email)) {
+    showSignupError("Please enter a valid email address");
+    return;
+  }
+
+  if (password.length < 6) {
+    showSignupError("Password must be at least 6 characters");
+    return;
+  }
+
+  if (password !== confirmPassword) {
+    showSignupError("Passwords do not match");
+    return;
+  }
+
+  const result = await registerUser(email, password, name);
+
+  if (result.success) {
+    login(result.user);
+    signupForm.reset();
+    showToast("Account created successfully", "success");
+  } else {
+    showSignupError(result.message || "Unable to create account");
+  }
+}
+
 // Register new user
 async function registerUser(email, password, name) {
   try {
@@ -242,6 +312,19 @@ function showLoginError(message) {
 
   setTimeout(() => {
     loginError.classList.remove("show");
+  }, 3000);
+}
+
+// Show signup error
+function showSignupError(message) {
+  if (!signupError) return;
+
+  const errorSpan = signupError.querySelector("span");
+  errorSpan.textContent = message;
+  signupError.classList.add("show");
+
+  setTimeout(() => {
+    signupError.classList.remove("show");
   }, 3000);
 }
 

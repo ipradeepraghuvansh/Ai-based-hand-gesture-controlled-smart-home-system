@@ -9,6 +9,8 @@ const path = require('path');
 const authRoutes = require('./routes/auth');
 const deviceRoutes = require('./routes/devices');
 const activityRoutes = require('./routes/activity');
+const { User } = require('./models');
+const bcrypt = require('bcryptjs');
 
 const app = express();
 const server = http.createServer(app);
@@ -28,7 +30,10 @@ app.use(express.static(path.join(__dirname, '../')));
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/gesturehome';
 
 mongoose.connect(MONGODB_URI)
-    .then(() => console.log('✅ Connected to MongoDB'))
+    .then(async () => {
+        console.log('✅ Connected to MongoDB');
+        await seedDemoUser();
+    })
     .catch(err => console.error('MongoDB connection error:', err));
 
 // API Routes
@@ -64,6 +69,31 @@ io.on('connection', (socket) => {
 
 // Make io accessible in routes
 app.set('io', io);
+
+// Ensure demo user exists
+async function seedDemoUser() {
+    try {
+        const demoEmail = 'admin@guest.com';
+        const demoPassword = 'admin123';
+        const demoName = 'Demo User';
+
+        let demoUser = await User.findOne({ email: demoEmail });
+        if (!demoUser) {
+            const hashedPassword = await bcrypt.hash(demoPassword, 10);
+            demoUser = new User({
+                email: demoEmail,
+                password: hashedPassword,
+                name: demoName
+            });
+            await demoUser.save();
+            console.log(`✅ Demo user created: ${demoEmail}`);
+        } else {
+            console.log(`✅ Demo user already exists: ${demoEmail}`);
+        }
+    } catch (error) {
+        console.error('Error creating demo user:', error);
+    }
+}
 
 // Serve frontend for all other routes
 app.get('*', (req, res) => {
