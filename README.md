@@ -1,4 +1,4 @@
-Project deployed link
+#Project deployed link
 [0;32m[1m==> [0m[1mAvailable at your primary URL https://ai-based-hand-gesture-controlled-smart-iykp.onrender.com[0m
 
 # GestureHome - Smart Home Automation
